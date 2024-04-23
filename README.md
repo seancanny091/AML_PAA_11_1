@@ -26,20 +26,20 @@ Data Types and Features:
 * Categorical Features: region, manufacturer, model, condition, cylinders, fuel, title_status, transmission, VIN, drive, size, type, paint_color, state  
   * Nominal Categorical Features - categories do not have a natural order or ranking: region, manufacturer, model, fuel, title_status, transmission, VIN, drive, type, paint_color, state  
   * Ordinal Categorical Features - categories have a natural order or ranking: condition, cylinders, size  
-Unique Values in Categorical Features  
-Region: 404 unique values  
-Manufacturer: 41 unique manufacturers  
-Model: 21,555 unique models  
-Condition: 6 categories  
-Cylinders: 8 categories  
-Fuel: 5 types  
-Title Status: 6 categories  
-Transmission: 3 types  
-Drive: 3 types  
-Size: 4 categories  
-Type: 13 categories  
-Paint Color: 12 colors  
-State: 51 states (including Washington D.C.)  
+  * Unique Values in Categorical Features  
+* Region: 404 unique values  
+* Manufacturer: 41 unique manufacturers  
+* Model: 21,555 unique models  
+* Condition: 6 categories  
+* Cylinders: 8 categories  
+* Fuel: 5 types  
+* Title Status: 6 categories  
+* Transmission: 3 types  
+* Drive: 3 types  
+* Size: 4 categories  
+* Type: 13 categories  
+* Paint Color: 12 colors  
+* State: 51 states (including Washington D.C.)  
 
 The dataset, named vehicles.csv, is in .csv format and comprises 18 columns and 426,880 rows, as illustrated below (refer to Figure 2). The target column, "price," is numerical, while only two other columns, "odometer" and "year," are also numerical. The remaining columns are categorical, encompassing both ordinal and nominal data. Consequently, the dataset is expected to exhibit imbalance prior to entering the modeling phase. With the exception of "region," "price," and "state," all columns contain numerous "NaN" values. No duplicates were detected. To gain deeper insights into the dataset, a preliminary data preparation, specifically data cleaning, is deemed necessary.
 
