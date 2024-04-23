@@ -78,19 +78,221 @@ The following initial data preparation steps were performed:
   *  Price (range preserved 100 - 600,000)
   *  Odometer (range preserved 0 - 500000)
 
-Outliers - price, year, 
-Outliers are removed from a dataset to enhance model performance, improve interpretability, meet assumptions of statistical techniques, increase model robustness, and ensure data quality. By eliminating outliers, models can better capture underlying patterns, make more accurate predictions, and draw clearer conclusions from the data. Outliers were removed using DBSCAN
+Outliers - price, year, odometer
+Outliers are removed from a dataset to enhance model performance, improve interpretability, meet assumptions of statistical techniques, increase model robustness, and ensure data quality. By eliminating outliers, models can better capture underlying patterns, make more accurate predictions, and draw clearer conclusions from the data. In the case of this dataset we'll use DBSCAN to identify outliers as it is robust enough to handle different distributions.
 <br>
 <br>
 Before removal:
+<br>
+![Image](/images/PreOutlierStats.png)
 ![Image](/images/BoxPriceYearOdoBefore.png)
 <br>
 <br>
 After removal:
+<br>
+![Image](/images/PostOutlierStats.png)
 ![Image](/images/BoxPriceYearOdoAfter.png)
 
+Visualizations of Features (independent variables) against Price (target/dependent variable):
+
+
+![Image](/images/PriceCondition.png)
+<br>
+Observation: There is a direct correlation between condition and mean price with 'new' commanding the highest mean price, and 'fair' the lowest.
+
+
+![Image](/images/PriceTransmission.png)
+<br>
+Observation: There is a direct correlation between condition and mean price with 'new' commanding the highest mean price, and 'fair' the lowest.
+
+
+![Image](/images/PriceTransmission.png)
+<br>
+Observation: Other transmission commands the highest mean price. This may relate to some luxury/exotic cars having specialized transmission options.
+
+
+![Image](/images/PriceSize.png)
+<br>
+Observation: There is a direct correlation between size and price with full-size commanding the highest mean price. Interestingly, sub-compacts appear to command a higher mean price than compacts which command the lowest mean price.
+
+
+![Image](/images/PriceDrive.png)
+<br>
+Observation: 4-wheel drive commands the highest mean price. Front-wheel drive commands the lowest mean price.
+
+
+![Image](/images/PriceFuel.png)
+<br>
+Observation: Diesel commands the highest mean price. Hybrid commands the lowest mean price.
+
+
+![Image](/images/PriceColor.png)
+<br>
+Observation: White commands the highest mean price, followed by orange (strangely enough - again may be due to the presence of exotic cars in the dataset), and black. Green commands the lowest mean price.
+
+
+![Image](/images/PriceTitle.png)
+<br>
+Observation: Vehicles with lien titles command the highest mean price, and vehicles with parts-only titles command the lowest mean price. This makes sense as a parts-only title basically means the vehicle is junk.
+
+
+![Image](/images/PriceCyl.png)
+<br>
+Observation: 10 cylinders commands the highest mean price, and 5 cylinders commands the lowest mean price.
+
+
+![Image](/images/PriceType.png)
+<br>
+Observation: Trucks command the highest mean price, and hatchbacks command the lowest mean price.
+
+
+![Image](/images/PriceType.png)
+<br>
+Observation: Trucks command the highest mean price, and hatchbacks command the lowest mean price.
+
+
+![Image](/images/PriceManuf.png)
+<br>
+Observation: Luxury brands such as Ferrari, Aston Martin, and Tesla command the highest mean price, and Saturn commands the lowest mean price.
+
+
+![Image](/images/PriceOdo.png)
+<br>
+Observation: The mean price tends to decrease with increasing odometer.
+
+
+![Image](/images/PriceYear.png)
+<br>
+Observation: For vehicles made in the last 20 years or so the mean price tends to increase with increasing year. There are interesting spikes for vehicles in the early 1900s and those made in the 1950s and 1960s. This is possibly due to these being collectible vehicles.
+
+
+![Image](/images/PriceState.png)
+<br>
+Observation: Vehicles in Alaska command the highest mean price and those in Ohio command the lowest mean price.
+
+
+![Image](/images/PriceState.png)
+<br>
+Observation: Vehicles in Alaska command the highest mean price and those in Ohio command the lowest mean price.
+
+
+### Feature Engineering
+
+Nominal Categorical Features (do not have a natural order or ranking) - treated using getDummies to translate variables to boolean values:
+* manufacturer
+* fuel
+* title_status
+* transmission
+* drive
+* type
+* paint_color
+* state
+
+Ordinal Categorical Features (have a natural order or ranking) - treated by directly assigning integer values to the feature, e.g., size: full-size = 3, mid-size = 2, compact = 1, sub-compact = 0:
+* condition
+* cylinders
+* size
+
+Most of the features are binary valued, so it was decided to scale the values of the non-binary features "price", "odometer", "year" to reduce imbalance:
+* Price/10000
+* Odometer/100000
+* Year/1000
+
+The dataset was then split into independent and dependent variable datasets.
+
+Permutation importance analysis was utilized in an attempt to identify the most impactful features: Odometer, fuel - gas, year, cylinders, drive - fwd were the top 5 most impactful feature identified. 
 
 
 
-  
+
+At this stage an attempt was made to build and run a linear regression model against the data but the K_Fold cross validation failed. It was suspected that this was due to the high dimensionality (127 features) of the dataset. It was decided to perform primary component analysis to reduce dimensionality while retaining most of the variance.
+
+### Principal Component Analysis
+
+Number of components to capture 80% variance: 20
+Cumulative Variance explained by these components: 0.8019850326549288
+
+![Image](/images/CumVarPCA.png)
+<br>
+<br>
+![Image](/images/PCALoadings.png)
+
+The top three features in the top five primary components were determined to be as follows:
+
+![Image](/images/Top3FeatTop5PC.png)
+
+## Modeling
+
+A final dataset was generated after applying principal component analysis and this was used for modeling. The dataset was split 80:20 into training and testing datasets to allow for Hold-Out cross validation. Additionally, K-Fold cross validation was used.
+
+### Simple Linear Regression Model
+
+![Image](/images/SimLinReg.png)
+
+#### Metrics:
+* Cross Validation Negative Mean Squared Error (MSE): -0.886 ± 0.101
+* Cross Validation R²: 0.492 ± 0.092
+* Train MSE: 0.727
+* Test MSE: 0.743
+* Score: 0.531
+
+PCA ranking:
+![Image](/images/SimLinRegPCA.png)
+
+
+### Ridge Regression
+
+![Image](/images/RidgeLinReg.png)
+
+#### Metrics:
+Cross Validation Negative MSE: -0.727 ± 0.025
+Cross Validation R²: 0.492 ± 0.092
+Train MSE: 0.727
+Test MSE: 0.743
+Score: 0.531
+
+PCA ranking:
+![Image](/images/RidgeLinRegPCA.png)
+
+
+### Lasso Regression:
+
+![Image](/images/LassoLinReg.png)
+
+#### Metrics:
+Cross Validation Negative MSE: -1.614 ± 0.141
+Cross Validation R²: -0.040 ± 0.021
+Train MSE: 1.603
+Test MSE: 1.645
+Score: -0.037
+
+PCA rankings:
+![Image](/images/LassoLinRegPCA.png)
+
+
+## Evaluation
+
+![Image](/images/Eval.png)
+
+Train and Test MSE: Ridge Regression has the lowest Mean Squared Error (MSE) for both training and testing, indicating it might be handling overfitting slightly better than Linear Regression, which has similar values. Lasso Regression, however, shows significantly higher MSE values, suggesting it might not be fitting the data well.  
+
+Scores: Ridge and Linear Regression have similar scores, which are substantially higher than the negative score of Lasso Regression. This further supports that Lasso Regression is underperforming compared to the other two models in this dataset.  
+
+These visualizations clearly show that Ridge Regression, while having similar performance metrics to Linear Regression, might be slightly more robust given its lower MSE values. Lasso Regression, on the other hand, appears to be the least effective model for this particular dataset.
+
+
+### Conclusions and Next Steps:
+
+Permutation Importance Findings: 
+The odometer feature has the highest importance, suggesting mileage is a crucial factor in predicting vehicle price. Fuel-related features, year, and condition of the vehicle also show notable importance. Geographic location, manufacturer, and vehicle type also influence vehicle prices.  
+
+Regression Model Findings: 
+Ridge, Linear, and Lasso regression models all show a positive influence of features like 'cylinders', 'size', 'drive_fwd', and 'type_sedan' on vehicle price. The Ridge model appears to perform better than the other models based on the reported performance metrics. The Linear Regression model faced issues with the original dataset, requiring the use of Principal Component Analysis (PCA) to reduce dimensionality.  
+
+Potential Next Steps: 
+* Feature Engineering - Explore additional features that could further improve the predictive power of the models, such as detailed vehicle specifications, market trends, or economic factors.  
+* Model Comparison and Tuning - Conduct a more comprehensive comparison of these and other regression models, including hyperparameter tuning and cross-validation to ensure robust performance.  
+* Handling Dimensionality - Investigate alternative approaches to address the dimensionality issues encountered with the Linear Regression model, such as feature selection or other dimensionality reduction techniques.  
+* Interpretability - Provide more detailed explanations of the feature importance and the relationships between the predictors and the target variable (vehicle price) to enhance the interpretability of the models.  
+* Real-world Deployment - Consider deploying the best-performing model in a real-world application, such as a vehicle pricing tool or a decision support system for buyers and sellers.
    
