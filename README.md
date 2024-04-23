@@ -16,6 +16,11 @@ The business task is to provide recommendations to a used car dealership on what
 
 ## Data Understanding
 
+The python SweetViz and Panda profiling libraries were leveraged for initial data exploration. The complete reports are available here: 
+
+[Link to SweetViz Report](/SWEETVIZ_Vehicles.html)
+[Link to Pandas Report](/Pandas_Profiling_Report_Vehicles.html)
+
 Dataset Overview:
 * Total Rows: 362,867  
 * Total Columns: 18  
@@ -62,14 +67,30 @@ Data Quality Issues
 * Odometer: Extremely high maximum value suggests possible outliers.  
 * Missing Values: Several columns like manufacturer, model, condition, cylinders, fuel, title_status, transmission, VIN, drive, size, type, paint_color have missing values. 
 
-The dataset, named vehicles.csv, is in .csv format and comprises 18 columns and 426,880 rows, as illustrated below (refer to Figure 2). The target column, "price," is numerical, while only two other columns, "odometer" and "year," are also numerical. The remaining columns are categorical, encompassing both ordinal and nominal data. Consequently, the dataset is expected to exhibit imbalance prior to entering the modeling phase. With the exception of "region," "price," and "state," all columns contain numerous "NaN" values. No duplicates were detected. To gain deeper insights into the dataset, a preliminary data preparation, specifically data cleaning, is deemed necessary.
+The dataset is expected to exhibit imbalance prior to entering the modeling phase. With the exception of "region," "price," and "state," all columns contain numerous "NaN" values. No duplicates were detected. To gain deeper insights into the dataset, a preliminary data preparation, specifically data cleaning, is deemed necessary.
 
-## Exploratory Data Analysis:
+## Data Preparation
 
-The python SweetViz and Panda profiling libraries were leveraged for initial data exploration. The complete reports are available here: 
+The following initial data preparation steps were performed:
+* Remove rows with missing values.
+* Remove non-impactful or overly granular features i.e., id, VIN, model (21,555 unique values and somewhat correlated with manufacturer), and region (404 unique values and somewhat correlated with state).
+* Remove unrealistic values (determined by visual inspection):
+  *  Price (range preserved 100 - 600,000)
+  *  Odometer (range preserved 0 - 500000)
 
-[Link to SweetViz Report](/SWEETVIZ_Vehicles.html)
-[Link to Pandas Report](/Pandas_Profiling_Report_Vehicles.html)
+Outliers - price, year, 
+Outliers are removed from a dataset to enhance model performance, improve interpretability, meet assumptions of statistical techniques, increase model robustness, and ensure data quality. By eliminating outliers, models can better capture underlying patterns, make more accurate predictions, and draw clearer conclusions from the data. Outliers were removed using DBSCAN
+<br>
+<br>
+Before removal:
+![Image](/images/BoxPriceYearOdoBefore.png)
+<br>
+<br>
+After removal:
+![Image](/images/BoxPriceYearOdoAfter.png)
 
 
-The following potential data quality issues were identified:
+
+
+  
+   
