@@ -22,24 +22,45 @@ Dataset Overview:
 
 Data Types and Features:
 * Numerical Features: price, year, odometer. Note: price is the target value.  
-
 * Categorical Features: region, manufacturer, model, condition, cylinders, fuel, title_status, transmission, VIN, drive, size, type, paint_color, state  
   * Nominal Categorical Features - categories do not have a natural order or ranking: region, manufacturer, model, fuel, title_status, transmission, VIN, drive, type, paint_color, state  
   * Ordinal Categorical Features - categories have a natural order or ranking: condition, cylinders, size  
   * Unique Values in Categorical Features  
-* Region: 404 unique values  
-* Manufacturer: 41 unique manufacturers  
-* Model: 21,555 unique models  
-* Condition: 6 categories  
-* Cylinders: 8 categories  
-* Fuel: 5 types  
-* Title Status: 6 categories  
-* Transmission: 3 types  
-* Drive: 3 types  
-* Size: 4 categories  
-* Type: 13 categories  
-* Paint Color: 12 colors  
-* State: 51 states (including Washington D.C.)  
+    * Region: 404 unique values  
+    * Manufacturer: 41 unique manufacturers  
+    * Model: 21,555 unique models  
+    * Condition: 6 categories  
+    * Cylinders: 8 categories  
+    * Fuel: 5 types  
+    * Title Status: 6 categories  
+    * Transmission: 3 types  
+    * Drive: 3 types  
+    * Size: 4 categories  
+    * Type: 13 categories  
+    * Paint Color: 12 colors  
+    * State: 51 states (including Washington D.C.)
+  
+* Feature Statistics
+  * Price: The average price is approximately $75199. There's a significant standard deviation, indicating wide price variations. The range is from $0 to over $3.7 billion, which suggests outliers or data entry errors.  
+  * Year: The cars range from 1900 to 2022, with a median year of 2013. This indicates that most cars are relatively recent.  
+  * Odometer: The average mileage is about 98,043 miles, with values ranging up to 10,000,000 miles, which might be an outlier.  
+  * Condition: Most cars are listed as "good".  
+  * Cylinders: "6 cylinders" is the most common specification.  
+  * Fuel: The majority of cars use gas.  
+  * Transmission: Automatic is the predominant transmission type.  
+  * Drive: "4wd" (four-wheel drive) is common among specified entries.  
+  * Type: Sedans are the most common type of car.  
+  * Paint_color: White is the most frequent color.  
+
+Other Observations
+* The dataset is rich in categorical data, which provides a diverse view of the used car market across different regions and specifications.  
+* The model column has a high number of unique values, indicating a wide variety of car models in the dataset.  
+* The VIN column also has a high number of unique values, which could be useful for tracking individual cars but may not be as useful for general analysis due to its granularity.  
+
+Data Quality Issues
+* Price: Extremely high maximum value likely indicates outliers or errors.  
+* Odometer: Extremely high maximum value suggests possible outliers.  
+* Missing Values: Several columns like manufacturer, model, condition, cylinders, fuel, title_status, transmission, VIN, drive, size, type, paint_color have missing values. 
 
 The dataset, named vehicles.csv, is in .csv format and comprises 18 columns and 426,880 rows, as illustrated below (refer to Figure 2). The target column, "price," is numerical, while only two other columns, "odometer" and "year," are also numerical. The remaining columns are categorical, encompassing both ordinal and nominal data. Consequently, the dataset is expected to exhibit imbalance prior to entering the modeling phase. With the exception of "region," "price," and "state," all columns contain numerous "NaN" values. No duplicates were detected. To gain deeper insights into the dataset, a preliminary data preparation, specifically data cleaning, is deemed necessary.
 
