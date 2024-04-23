@@ -24,8 +24,8 @@ Data Types and Features:
 * Numerical Features: price, year, odometer. Note: price is the target value.  
 
 * Categorical Features: region, manufacturer, model, condition, cylinders, fuel, title_status, transmission, VIN, drive, size, type, paint_color, state  
-** Nominal Categorical Features - categories do not have a natural order or ranking: region, manufacturer, model, fuel, title_status, transmission, VIN, drive, type, paint_color, state  
-** Ordinal Categorical Features - categories have a natural order or ranking: condition, cylinders, size  
+  * Nominal Categorical Features - categories do not have a natural order or ranking: region, manufacturer, model, fuel, title_status, transmission, VIN, drive, type, paint_color, state  
+  * Ordinal Categorical Features - categories have a natural order or ranking: condition, cylinders, size  
 Unique Values in Categorical Features  
 Region: 404 unique values  
 Manufacturer: 41 unique manufacturers  
