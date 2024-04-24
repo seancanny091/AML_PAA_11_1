@@ -236,7 +236,7 @@ A final dataset was generated after applying principal component analysis and th
 * Test MSE: 0.743
 * Score: 0.531
 
-PCA ranking:
+PCA ranking:<br>
 ![Image](/images/SimLinRegPCA.png)
 
 
@@ -251,7 +251,7 @@ Train MSE: 0.727
 Test MSE: 0.743
 Score: 0.531
 
-PCA ranking:
+PCA ranking:<br>
 ![Image](/images/RidgeLinRegPCA.png)
 
 
@@ -266,13 +266,13 @@ Train MSE: 1.603
 Test MSE: 1.645
 Score: -0.037
 
-PCA rankings:
+PCA rankings:<br>
 ![Image](/images/LassoLinRegPCA.png)
 
 
 ## Evaluation
 
-![Image](/images/Eval.png)
+![Image](/images/eval.png)
 
 Train and Test MSE: Ridge Regression has the lowest Mean Squared Error (MSE) for both training and testing, indicating it might be handling overfitting slightly better than Linear Regression, which has similar values. Lasso Regression, however, shows significantly higher MSE values, suggesting it might not be fitting the data well.  
 
