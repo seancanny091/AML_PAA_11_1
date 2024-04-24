@@ -21,11 +21,11 @@ The python SweetViz and Panda profiling libraries were leveraged for initial dat
 [Link to SweetViz Report](/SWEETVIZ_Vehicles.html)
 [Link to Pandas Report](/Pandas_Profiling_Report_Vehicles.html)
 
-Dataset Overview:
+#### Dataset Overview:
 * Total Rows: 362,867  
 * Total Columns: 18  
 
-Data Types and Features:
+#### Data Types and Features:
 * Numerical Features: price, year, odometer. Note: price is the target value.  
 * Categorical Features: region, manufacturer, model, condition, cylinders, fuel, title_status, transmission, VIN, drive, size, type, paint_color, state  
   * Nominal Categorical Features - categories do not have a natural order or ranking: region, manufacturer, model, fuel, title_status, transmission, VIN, drive, type, paint_color, state  
@@ -57,7 +57,7 @@ Data Types and Features:
   * Type: Sedans are the most common type of car.  
   * Paint_color: White is the most frequent color.  
 
-Other Observations
+#### Other Observations
 * The dataset is rich in categorical data, which provides a diverse view of the used car market across different regions and specifications.  
 * The model column has a high number of unique values, indicating a wide variety of car models in the dataset.  
 * The VIN column also has a high number of unique values, which could be useful for tracking individual cars but may not be as useful for general analysis due to its granularity.  
@@ -78,22 +78,22 @@ The following initial data preparation steps were performed:
   *  Price (range preserved 100 - 600,000)
   *  Odometer (range preserved 0 - 500000)
 
-Outliers - price, year, odometer
+#### Outliers - price, year, odometer <br>
 Outliers are removed from a dataset to enhance model performance, improve interpretability, meet assumptions of statistical techniques, increase model robustness, and ensure data quality. By eliminating outliers, models can better capture underlying patterns, make more accurate predictions, and draw clearer conclusions from the data. In the case of this dataset we'll use DBSCAN to identify outliers as it is robust enough to handle different distributions.
 <br>
 <br>
-Before removal:
+Before outlier removal:
 <br>
 ![Image](/images/PreOutlierStats.png)
 ![Image](/images/BoxPriceYearOdoBefore.png)
 <br>
 <br>
-After removal:
+After outlier removal:
 <br>
 ![Image](/images/PostOutlierStats.png)
 ![Image](/images/BoxPriceYearOdoAfter.png)
 
-Visualizations of Features (independent variables) against Price (target/dependent variable):
+### Visualizations of Features (independent variables) against Price (target/dependent variable):
 
 
 ![Image](/images/PriceCondition.png)
@@ -176,7 +176,7 @@ Observation: Vehicles in Alaska command the highest mean price and those in Ohio
 Observation: Vehicles in Alaska command the highest mean price and those in Ohio command the lowest mean price.
 
 
-### Feature Engineering
+## Feature Engineering
 
 Nominal Categorical Features (do not have a natural order or ranking) - treated using getDummies to translate variables to boolean values:
 * manufacturer
@@ -205,7 +205,7 @@ Permutation importance analysis was utilized in an attempt to identify the most 
 
 
 
-At this stage an attempt was made to build and run a linear regression model against the data but the K_Fold cross validation failed. It was suspected that this was due to the high dimensionality (127 features) of the dataset. It was decided to perform primary component analysis to reduce dimensionality while retaining most of the variance.
+At this stage an attempt was made to build and run a linear regression model against the data but the K_Fold cross validation failed. It was suspected that this was due to the high dimensionality (127 features) of the dataset. It was decided to perform principal component analysis to reduce dimensionality while retaining most of the variance.
 
 ### Principal Component Analysis
 
@@ -217,7 +217,7 @@ Cumulative Variance explained by these components: 0.8019850326549288
 <br>
 ![Image](/images/PCALoadings.png)
 
-The top three features in the top five primary components were determined to be as follows:
+The top three features in the top five pricipal components were determined to be as follows:
 
 ![Image](/images/Top3FeatTop5PC.png)
 
@@ -245,11 +245,11 @@ PCA ranking:<br>
 ![Image](/images/RidgeLinReg.png)
 
 #### Metrics:
-Cross Validation Negative MSE: -0.727 ± 0.025
-Cross Validation R²: 0.492 ± 0.092
-Train MSE: 0.727
-Test MSE: 0.743
-Score: 0.531
+* Cross Validation Negative MSE: -0.727 ± 0.025
+* Cross Validation R²: 0.492 ± 0.092
+* Train MSE: 0.727
+* Test MSE: 0.743
+* Score: 0.531
 
 PCA ranking:<br>
 ![Image](/images/RidgeLinRegPCA.png)
@@ -260,11 +260,11 @@ PCA ranking:<br>
 ![Image](/images/LassoLinReg.png)
 
 #### Metrics:
-Cross Validation Negative MSE: -1.614 ± 0.141
-Cross Validation R²: -0.040 ± 0.021
-Train MSE: 1.603
-Test MSE: 1.645
-Score: -0.037
+* Cross Validation Negative MSE: -1.614 ± 0.141
+* Cross Validation R²: -0.040 ± 0.021
+* Train MSE: 1.603
+* Test MSE: 1.645
+* Score: -0.037
 
 PCA rankings:<br>
 ![Image](/images/LassoLinRegPCA.png)
@@ -281,7 +281,7 @@ Scores: Ridge and Linear Regression have similar scores, which are substantially
 These visualizations clearly show that Ridge Regression, while having similar performance metrics to Linear Regression, might be slightly more robust given its lower MSE values. Lasso Regression, on the other hand, appears to be the least effective model for this particular dataset.
 
 
-### Conclusions and Next Steps:
+## Conclusions and Next Steps:
 
 Permutation Importance Findings: 
 The odometer feature has the highest importance, suggesting mileage is a crucial factor in predicting vehicle price. Fuel-related features, year, and condition of the vehicle also show notable importance. Geographic location, manufacturer, and vehicle type also influence vehicle prices.  
